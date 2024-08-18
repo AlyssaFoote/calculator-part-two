@@ -82,17 +82,15 @@ addGlobalEventListener('click', '.operator', (e) => {
 
 // Percentage Capture
 
-addGlobalEventListener('click', '.percentage', (e) => {
-  if (operator === '') {
-    if (num1 === '') return; // Note to self: If no operator is selected, apply to num1
+addGlobalEventListener('click', '.percentage', () => {
+  if (operator === '' || num2 === '') {
     num1 = (parseFloat(num1) / 100).toString();
     display.textContent = num1;
   } else {
-    // If an operator has been selected, apply % to num2
-    if (num2 === '') return;
     num2 = (parseFloat(num2) / 100).toString();
     display.textContent = num2;
   }
+  shouldResetDisplay = true;
 });
 
 // Calculation Station
