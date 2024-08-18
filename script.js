@@ -44,12 +44,20 @@ const addGlobalEventListener = (type, selector, callback) => {
 
 const display = document.querySelector('.calcDisplay');
 display.textContent = '0';
-
 let num1 = '';
 
-let num = addGlobalEventListener('click', '.operand', (e) => {
+// Captures number clicks in the display
+addGlobalEventListener('click', '.operand', (e) => {
   let number = e.target.textContent;
   num1 += number;
   display.textContent = num1;
   console.log(`Current number: ${num1}`);
+});
+
+// Step Four:
+// Enable All Clear
+
+addGlobalEventListener('click', '.allClear', (e) => {
+  display.textContent = '0';
+  num1 = '';
 });
