@@ -29,3 +29,12 @@ const subtract = (num1, num2) => num1 - num2;
 const divide = (num1, num2) => num1 / num2;
 const multiply = (num1, num2) => num1 * num2;
 const percentage = (num1) => num1 / 100;
+
+// Step Two:
+// Create global event listener
+
+const addGlobalEventListener = (type, selector, callback) => {
+  document.addEventListener(type, (e) => {
+    if (e.target.matches(selector)) callback(e);
+  });
+};
