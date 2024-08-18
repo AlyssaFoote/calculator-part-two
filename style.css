@@ -1,3 +1,9 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 html,
 body,
 div,
@@ -121,4 +127,69 @@ q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+/* Magic Goes Below */
+
+body {
+  font-family: 'Xanh Mono', monospace;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calculator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 800px;
+}
+
+.calculator-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 600px;
+}
+
+.buttonBox {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 10px;
+  height: 482px;
+  width: 450px;
+  background-color: black;
+  padding: 40px;
+}
+
+.calcDisplay {
+  display: flex;
+  font-size: 88px;
+  font-style: italic;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 450px;
+  height: 150px;
+  background-color: #0ceb1c;
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
+  padding-right: 40px;
+  padding-bottom: 20px;
+}
+
+button {
+  font-family: 'Xanh Mono', monospace;
+  height: 64px;
+  width: 100%;
+  border-radius: 11.1px;
+  font-size: 40px;
+  border: none;
+}
+
+.zero {
+  grid-column: span 2;
 }
