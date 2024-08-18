@@ -21,25 +21,6 @@ Appearance:
 
 */
 
-// Step One:
-// Create the core calculator functions
-
-const add = (num1, num2) => num1 + num2;
-const subtract = (num1, num2) => num1 - num2;
-const divide = (num1, num2) => num1 / num2;
-const multiply = (num1, num2) => num1 * num2;
-const percentage = (num1) => num1 / 100;
-
-// Step Two:
-// Create global event listener
-
-const addGlobalEventListener = (type, selector, callback) => {
-  document.addEventListener(type, (e) => {
-    if (e.target.matches(selector)) callback(e);
-  });
-};
-
-// Step Three:
 // Setting up initial logic and DOM inputs for num1
 
 const display = document.querySelector('.calcDisplay');
@@ -49,16 +30,43 @@ let operator = '';
 let num2 = '';
 let shouldResetDisplay = false;
 
-// Captures number clicks in the display
+// Core calculator functions
+
+const add = (num1, num2) => num1 + num2;
+const subtract = (num1, num2) => num1 - num2;
+const divide = (num1, num2) => num1 / num2;
+const multiply = (num1, num2) => num1 * num2;
+const percentage = (num1) => num1 / 100;
+
+// Capture number clicks
+
 addGlobalEventListener('click', '.operand', (e) => {
-  if (num1 === '' && operatorButton.dataset.clicked === 'false') {
-    let number = e.target.textContent;
+  const number = e.target.textContent;
+
+  if (shouldResetDisplay) {
+    display.textContent = '';
+    shouldResetDisplay = false;
+  }
+
+  if (operator === '') {
     num1 += number;
-    calculation += num1;
     display.textContent = num1;
-    console.log(`Current number: ${num1}`);
+  } else {
+    num2 += number;
+    display.textContent = num2;
   }
 });
+
+// Captures number clicks in the display
+// addGlobalEventListener('click', '.operand', (e) => {
+//   if (num1 === '' && operatorButton.dataset.clicked === 'false') {
+//     let number = e.target.textContent;
+//     num1 += number;
+//     calculation += num1;
+//     display.textContent = num1;
+//     console.log(`Current number: ${num1}`);
+//   }
+// });
 
 // Step Four:
 // Enable All Clear
@@ -67,6 +75,7 @@ addGlobalEventListener('click', '.allClear', (e) => {
   num1 = '';
   num2 = '';
   operator = '';
+  shouldResetDisplay = false;
 });
 
 // Step Five:
@@ -76,19 +85,10 @@ addGlobalEventListener('click', '.allClear', (e) => {
 // B. After num1 has been captured, and once user clicks operator...
 //    I. Need to set up operator capture
 addGlobalEventListener('click', '.operator', (e) => {
-  operatorButton.dataset.clicked = 'true';
+  if (num1 === '') return;
   operator = e.target.textContent;
-  console.log(operator);
+  shouldResetDisplay = true;
 });
-
-// C. Then num2 can be captured (dependant on operator being clicked)
-//    I. Need to set up num2 capture
-addGlobalEventListener('click', '.number', (e) => {});
-if (operator !== '' && operator !== null && operator !== undefined) {
-  display.textContent = '';
-  num2 = e.target.textContent;
-  display.textContent = num2;
-}
 
 // D. After "=" is pressed, the calculation will be called
 
