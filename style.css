@@ -179,6 +179,7 @@ body {
   border-top-right-radius: 32px;
   padding-right: 40px;
   padding-bottom: 20px;
+  overflow: hidden;
 }
 
 button {
