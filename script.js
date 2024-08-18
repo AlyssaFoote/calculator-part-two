@@ -45,19 +45,56 @@ const addGlobalEventListener = (type, selector, callback) => {
 const display = document.querySelector('.calcDisplay');
 display.textContent = '0';
 let num1 = '';
+let operator = '';
+let num2 = '';
+let shouldResetDisplay = false;
 
 // Captures number clicks in the display
 addGlobalEventListener('click', '.operand', (e) => {
-  let number = e.target.textContent;
-  num1 += number;
-  display.textContent = num1;
-  console.log(`Current number: ${num1}`);
+  if (num1 === '' && operatorButton.dataset.clicked === 'false') {
+    let number = e.target.textContent;
+    num1 += number;
+    calculation += num1;
+    display.textContent = num1;
+    console.log(`Current number: ${num1}`);
+  }
 });
 
 // Step Four:
 // Enable All Clear
-
 addGlobalEventListener('click', '.allClear', (e) => {
   display.textContent = '0';
   num1 = '';
+  num2 = '';
+  operator = '';
 });
+
+// Step Five:
+// Set up calculation logic
+// A. Need to capture num1 (done)
+
+// B. After num1 has been captured, and once user clicks operator...
+//    I. Need to set up operator capture
+addGlobalEventListener('click', '.operator', (e) => {
+  operatorButton.dataset.clicked = 'true';
+  operator = e.target.textContent;
+  console.log(operator);
+});
+
+// C. Then num2 can be captured (dependant on operator being clicked)
+//    I. Need to set up num2 capture
+addGlobalEventListener('click', '.number', (e) => {});
+if (operator !== '' && operator !== null && operator !== undefined) {
+  display.textContent = '';
+  num2 = e.target.textContent;
+  display.textContent = num2;
+}
+
+// D. After "=" is pressed, the calculation will be called
+
+// Calculation Station
+addGlobalEventListener('click', '.return', (e) => {
+  let result = parseInt(`${num1}${operator}${num2}`);
+  display.textContent = result.toString();
+});
+//    I. Need to ensure that the strings are parseInt'd and used to math it up
