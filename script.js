@@ -84,10 +84,16 @@ addGlobalEventListener('click', '.operator', (e) => {
 // Percentage Capture
 
 addGlobalEventListener('click', '.percentage', (e) => {
-  if (num1 === '') return;
-  console.log('percentage');
-  num1 /= 100;
-  display.textContent = num1;
+  if (operator === '') {
+    if (num1 === '') return; // Note to self: If no operator is selected, apply to num1
+    num1 = (parseFloat(num1) / 100).toString();
+    display.textContent = num1;
+  } else {
+    // If an operator has been selected, apply % to num2
+    if (num2 === '') return;
+    num2 = (parseFloat(num2) / 100).toString();
+    display.textContent = num2;
+  }
 });
 
 // Calculation Station
@@ -101,7 +107,7 @@ addGlobalEventListener('click', '.return', (e) => {
     case '-':
       result = subtract(parseFloat(num1), parseFloat(num2));
       break;
-    case 'X':
+    case '*':
       result = multiply(parseFloat(num1), parseFloat(num2));
       break;
     case '/':
