@@ -38,3 +38,18 @@ const addGlobalEventListener = (type, selector, callback) => {
     if (e.target.matches(selector)) callback(e);
   });
 };
+
+// Step Three:
+// Setting up initial logic and DOM inputs for num1
+
+const display = document.querySelector('.calcDisplay');
+display.textContent = '0';
+
+let num1 = '';
+
+let num = addGlobalEventListener('click', '.operand', (e) => {
+  let number = e.target.textContent;
+  num1 += number;
+  display.textContent = num1;
+  console.log(`Current number: ${num1}`);
+});
