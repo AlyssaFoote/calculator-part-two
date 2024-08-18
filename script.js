@@ -64,7 +64,7 @@ addGlobalEventListener('click', '.operand', (e) => {
 
 // Enable All Clear
 
-addGlobalEventListener('click', '.allClear', (e) => {
+addGlobalEventListener('click', '.allClear', () => {
   display.textContent = '0';
   num1 = '';
   num2 = '';
