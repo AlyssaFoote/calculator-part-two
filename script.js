@@ -72,49 +72,74 @@ addGlobalEventListener('click', '.allClear', () => {
   shouldResetDisplay = false;
 });
 
+// Percentage Capture
+
+addGlobalEventListener('click', '.percentage', (e) => {
+  if (operator === '' || shouldResetDisplay) {
+    if (num1 === '') return; //
+    num1 = (parseFloat(num1) / 100).toString(); // Convert to a percentage
+    display.textContent = num1;
+  } else {
+    if (num2 === '') return; //
+    num2 = (parseFloat(num2) / 100).toString(); // Convert to a percentage
+    display.textContent = num2;
+  }
+  shouldResetDisplay = false; // Reset display only when the next number is entered
+});
+
 // Operator Capture
 
 addGlobalEventListener('click', '.operator', (e) => {
-  if (num1 === '') return;
+  if (num1 === '') return; // Ignore if no number has been entered yet
+
+  if (num2 !== '') {
+    performCalculation(); // Directly call the performCalculation function
+  }
+
   operator = e.target.textContent;
   shouldResetDisplay = true;
 });
 
-// Percentage Capture
-
-addGlobalEventListener('click', '.percentage', () => {
-  if (operator === '' || num2 === '') {
-    num1 = (parseFloat(num1) / 100).toString();
-    display.textContent = num1;
-  } else {
-    num2 = (parseFloat(num2) / 100).toString();
-    display.textContent = num2;
-  }
-  shouldResetDisplay = true;
-});
-
 // Calculation Station
-addGlobalEventListener('click', '.return', (e) => {
+addGlobalEventListener('click', '.return', () => {
   if (num1 === '' || num2 === '' || operator === '') return;
+
+  // Parse num1 and num2 to ensure they are numbers
+  let number1 = parseFloat(num1);
+  let number2 = parseFloat(num2);
+
   let result;
   switch (operator) {
     case '+':
-      result = add(parseFloat(num1), parseFloat(num2));
+      result = number1 + number2;
       break;
     case '-':
-      result = subtract(parseFloat(num1), parseFloat(num2));
+      result = number1 - number2;
       break;
     case '*':
-      result = multiply(parseFloat(num1), parseFloat(num2));
+      result = number1 * number2;
       break;
     case '/':
-      result = divide(parseFloat(num1), parseFloat(num2));
+      if (number2 === 0) {
+        display.textContent = 'LOL'; // Handle division by zero
+        return;
+      } else {
+        result = number1 / number2;
+      }
       break;
     default:
-      result = 'Error';
+      display.textContent = 'Error'; // Handle unexpected operator
+      return;
   }
-  display.textContent = result.toFixed(2).toString();
 
+  if (isNaN(result) || !isFinite(result)) {
+    display.textContent = 'Error'; // Handle invalid results
+  } else {
+    result = Math.round(result * 100) / 100;
+    display.textContent = result.toString(); // Display the result without rounding errors
+  }
+
+  // Ensure the result is stored correctly for further operations
   num1 = result.toString();
   num2 = '';
   operator = '';
