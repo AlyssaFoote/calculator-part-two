@@ -194,3 +194,8 @@ button {
 .zero {
   grid-column: span 2;
 }
+
+.blue {
+  background-color: #0c4beb;
+  color: #0ceb1c;
+}
